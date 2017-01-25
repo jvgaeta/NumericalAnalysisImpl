@@ -14,14 +14,12 @@ def J(x):
 def Newton(x, tol=.0001, N=1000):
     k = 0
     while k <= N:
-    	f = F(x)
-    	j = J(x)
-    	mat = np.column_stack((j, -1.0 * f))
-    	y = slvr.gaussian_elimination(mat)
-    	x = x + y
-    	if np.linalg.norm(y, ord=np.inf) < tol:
-    		return x
+        f = F(x)
+        j = J(x)
+        mat = np.column_stack((j, -1.0 * f))
+        y = slvr.gaussian_elimination(mat)
+        x = x + y
+        if np.linalg.norm(y, ord=np.inf) < tol:
+            return x
         k += 1
     return x
-
-solution = Newton(np.array([1., 1.]))

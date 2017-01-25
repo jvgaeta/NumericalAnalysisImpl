@@ -12,58 +12,52 @@ import math
 
 # this performs backwards substitution
 def backward_substitution(A):
-	n = len(A)
-	x = np.zeros(n) # create an array to hold the solutions
-	i = n - 1
-	print(A)
-	x[i] = A[i, -1] / A[i, i]
-	# loop to find all of the solutions, using backwards substitution
-	for k in range(n - 2, -1, -1):
-		# this obtains the last element in the row --> b_i
-		summation = A[k, -1]
-		for j in range(k + 1, n):
-			summation -= A[k, j] * x[j]
-		x[k] = summation / A[k, k]
+    n = len(A)
+    x = np.zeros(n) # create an array to hold the solutions
+    i = n - 1
+    print(A)
+    x[i] = A[i, -1] / A[i, i]
+    # loop to find all of the solutions, using backwards substitution
+    for k in range(n - 2, -1, -1):
+        # this obtains the last element in the row --> b_i
+        summation = A[k, -1]
+        for j in range(k + 1, n):
+            summation -= A[k, j] * x[j]
+        x[k] = summation / A[k, k]
 
-	return x
+    return x
 
 
 # this function takes an augmented matrix and performs gaussian elimination
 def gaussian_elimination(A):
-	# size of the matrix
-	n = len(A)
+    # size of the matrix
+    n = len(A)
 
-	# first loop
-	for i in range(0, n - 1):
+    # first loop
+    for i in range(0, n - 1):
 
-		# select pivot
-		for pivot in range(i, n):
+        # select pivot
+        for pivot in range(i, n):
 
-			if A[pivot, i] != 0: 
-				p = pivot
-				break
+            if A[pivot, i] != 0: 
+                p = pivot
+                break
 
-		# check to see if it worked
-		if A[p, i] == 0:
-			print('This is a singular matrix.')
-			return
+        # check to see if it worked
+        if A[p, i] == 0:
+            print('This is a singular matrix.')
+            return
 
-		# perform the swap here
-		if p != i:
-			A[[i, p]] = A[[p, i]]
+        # perform the swap here
+        if p != i:
+            A[[i, p]] = A[[p, i]]
 
-		# second loop
-		for j in range(i + 1, n):
-			A[j] = A[j] - (A[j, i] / A[i, i]) * A[i]
+        # second loop
+        for j in range(i + 1, n):
+            A[j] = A[j] - (A[j, i] / A[i, i]) * A[i]
 
-	if A[n - 1, n - 1] == 0:
-		print('No unique solution!')
-		return
-	else:
-		return backward_substitution(A)
-
-if __name__ == "__main__":
-	# the main holds all parts of 7,8
-	B = np.array([[-36.,13.,-11.],[22.,math.pi,math.sqrt(2)],[41.,-37./17.,--2.],[math.sqrt(3),math.sqrt(7), -3.]], dtype='d')
-	print(B)
-	print(gaussian_elimination(B))
+    if A[n - 1, n - 1] == 0:
+        print('No unique solution!')
+        return
+    else:
+        return backward_substitution(A)
